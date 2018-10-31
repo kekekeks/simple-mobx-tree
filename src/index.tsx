@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './index.css';
 import {observable} from "mobx";
-import TreeView from "./components/tree";
+import {TreeView} from "./components/tree";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
@@ -52,10 +52,16 @@ class MyTreeView extends TreeView<MyNode> {
 
 }
 
+function MyNodeComponent (props:{node:MyNode})
+{
+    return <div>{props.node.text}</div>
+}
+
 ReactDOM.render(
     <MyTreeView items={treeItems.items} getText={i => i.text} getChildren={i => i.children} getKey={i => i.key!}
                 getToggled={i => i.isToggled} onToggle={i => i.isToggled = !i.isToggled}
-                onClick={i => window.alert(i.text + ' clicked')}/>,
+                component={MyNodeComponent}
+                />,
     document.getElementById('root') as HTMLElement
 );
 
